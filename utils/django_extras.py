@@ -42,6 +42,8 @@
 
 from django.db import models
 from django.db import connection
+from django.conf import settings
+from django.db.transaction import enter_transaction_management, leave_transaction_management
 
 
 
@@ -96,19 +98,23 @@ class LockingManager(models.manager.Manager):
         
         See http://dev.mysql.com/doc/refman/5.0/en/lock-tables.html
         """
-        cursor = connection.cursor()
-        table = self.model._meta.db_table
-        cursor.execute("LOCK TABLES %s WRITE" % table)
-        row = cursor.fetchone()
-        return row
+        if settings.DATABASE_ENGINE == 'mysql':
+            cursor = connection.cursor()
+            table = self.model._meta.db_table
+            cursor.execute("LOCK TABLES %s WRITE" % table)
+            cursor.fetchone()
+        else:
+            enter_transaction_management()
     
     def unlock(self):
         """ Unlock the table. """
-        cursor = connection.cursor()
-        table = self.model._meta.db_table
-        cursor.execute("UNLOCK TABLES")
-        row = cursor.fetchone()
-        return row
+        if settings.DATABASE_ENGINE == 'mysql':
+            cursor = connection.cursor()
+            table = self.model._meta.db_table
+            cursor.execute("UNLOCK TABLES")
+            cursor.fetchone()
+        else:
+            leave_transaction_management()
 
 def agg_query_set_field(query_set, agg_by, field):
     # TODO use aggregation upon upgrade to django 1.1 
