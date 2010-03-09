@@ -1170,10 +1170,10 @@ class ResourceReservation(models.Model):
             #
             ResourceReservation.objects.lock()
             cursor = connection.cursor()
-            cursor.execute("""SELECT sum(`units_reserved`) as units_reserved
-                                 FROM `%s` 
-                                WHERE `region_id` = %s
-                                  AND `resource_id` = %s
+            cursor.execute("""SELECT sum(units_reserved) as units_reserved
+                                 FROM %s 
+                                WHERE region_id = %s
+                                  AND resource_id = %s
                             """ % ('norc_resourcereservation', region_id, resource_id))
             row = cursor.fetchone()
             units_reserved = row[0]
