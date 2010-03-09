@@ -48,7 +48,7 @@ from optparse import OptionParser
 
 from norc.core import models as tms_models
 from norc.core import manage as tms_manage
-from norc import settings
+from django.conf import settings
 
 from norc.utils import formatting
 from norc.utils import log

@@ -46,7 +46,7 @@ from optparse import OptionParser
 
 from boto.sqs.connection import SQSConnection
 
-from norc import settings
+from django.conf import settings
 from norc.bin import tmsd
 from norc.core import models as tms_models
 

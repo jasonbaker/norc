@@ -46,7 +46,7 @@ from optparse import OptionParser
 
 from boto.sqs.connection import SQSConnection
 
-from norc import settings
+from django.conf import settings
 from norc.core import models as core
 from norc.sqs import models as sqs
 
