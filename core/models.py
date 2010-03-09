@@ -657,6 +657,7 @@ class TaskRunStatus(models.Model):
     
     class Meta:
         db_table = 'norc_taskrunstatus'
+        verbose_name_plural = "Task run statuses"
     
     # @see http://docs.djangoproject.com/en/dev/ref/contrib/contenttypes/
     # or the lesser @see http://www.djangoproject.com/documentation/models/generic_relations/
