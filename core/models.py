@@ -127,6 +127,7 @@ class TaskDependency(models.Model):
         db_table = 'norc_taskdependency'
         unique_together = (('_parent_task_content_type', '_parent_task_object_id'
                             , '_child_task_content_type', '_child_task_object_id'),)
+        verbose_name_plural = 'Task dependencies'
     
     # I want to use a ManyToManyField for this in the Task superclass
     # but the relation is generic, so gotta use a seperate TaskDependency class.
